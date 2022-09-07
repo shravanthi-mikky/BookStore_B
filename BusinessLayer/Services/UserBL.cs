@@ -18,7 +18,7 @@ namespace BusinessLayer.Services
         {
             try
             {
-                return this.Register(registrationModel);
+                return iUserRL.Register(registrationModel);
             }
             catch(Exception ex)
             {
@@ -30,7 +30,31 @@ namespace BusinessLayer.Services
         {
             try
             {
-                return this.Login(loginModel);
+                return iUserRL.Login(loginModel);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public string ForgetPassword(string Email)
+        {
+            try
+            {
+                return iUserRL.ForgetPassword(Email);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public bool ResetPassword(string Email, string newpassword, string confirmpassword)
+        {
+            try
+            {
+                return iUserRL.ResetPassword(Email, newpassword, confirmpassword);
             }
             catch (Exception ex)
             {

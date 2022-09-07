@@ -11,6 +11,7 @@ CREATE TABLE Users(
 
 select * from Users 
 
+
 -----------------------
 
 GO
@@ -32,4 +33,32 @@ IF (select Id from Users where Email=@Email) is not null
 		Insert into Users (Fullname,Email,Mobile,Password)    
 		Values (@Fullname,@Email,@Mobile,@Password) 
 	end   
+END
+
+---------SP for Login-----------------
+create or ALTER procedure SP_Login
+(
+	@Email varchar(200),
+	@Password varchar(100)
+)
+as
+begin
+select * from Users where Email=@Email and Password=@Password
+
+END
+
+-----------------------------------Forget password-stored procedure-------------
+create or ALTER PROCEDURE [dbo].[SpForgetPass]
+@Email varchar(200)
+AS
+BEGIN
+	SELECT * from Users where Email=@Email
+END
+--------------------------------Reset Password-------------------------------------------------
+create or ALTER PROCEDURE [dbo].[SpReset]
+@Email varchar(200),
+@Password varchar(200)
+AS
+BEGIN
+	Update Users Set Password=@Password where Email=@Email
 END

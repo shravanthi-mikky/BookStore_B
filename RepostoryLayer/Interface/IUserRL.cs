@@ -10,5 +10,9 @@ namespace RepostoryLayer.Interface
         public bool Register(RegistrationModel registrationModel);
 
         public string Login(LoginModel loginModel);
+
+        public string ForgetPassword(string Emailid);
+
+        public bool ResetPassword(string email, string newpassword, string confirmpassword);
     }
 }
