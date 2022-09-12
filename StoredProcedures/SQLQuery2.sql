@@ -62,5 +62,3 @@ AS
 BEGIN
 	Update Users Set Password=@Password where Email=@Email
 END
-
-select *from Admintable
