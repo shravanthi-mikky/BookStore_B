@@ -1,5 +1,6 @@
 ﻿using BusinessLayer.Interface;
 using CommonLayer.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
@@ -59,6 +60,7 @@ namespace BookStoreBackend.Controllers
                 return this.BadRequest(new { Success = false, message = e.Message });
             }
         }
+        [Authorize]
         [HttpPost("ForgetPassword")]
         public IActionResult ForgetPassword(string email)
         {
@@ -79,7 +81,7 @@ namespace BookStoreBackend.Controllers
                 throw;
             }
         }
-        
+        [Authorize]
         [HttpPost("Reset")]
         public IActionResult ResetPassword(string email, string newpassword, string confirmpassword)
         {
