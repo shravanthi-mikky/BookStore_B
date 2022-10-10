@@ -64,3 +64,5 @@ BEGIN
 		where BookId=@BookId
 END
 select * from Feedback
+
+update Feedback set Comment='Good Book' where FeedbackId = 3

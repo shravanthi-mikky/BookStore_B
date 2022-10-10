@@ -63,5 +63,17 @@ namespace BusinessLayer.Services
                 throw;
             }
         }
+
+        public List<Address_Model1> GetUserAddressAndUserDetails()
+        {
+            try
+            {
+                return iAddressRL.GetUserAddressAndUserDetails();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     } 
 }

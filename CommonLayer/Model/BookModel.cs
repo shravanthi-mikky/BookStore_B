@@ -9,7 +9,7 @@ namespace CommonLayer.Model
 {
     public class BookModel
     {
-        [JsonIgnore]
+        
         public int bookId { get; set; }
         public string bookName { get; set; }
         public string authorName { get; set; }

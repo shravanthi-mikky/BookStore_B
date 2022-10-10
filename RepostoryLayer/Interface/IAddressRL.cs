@@ -11,5 +11,7 @@ namespace RepostoryLayer.Interface
         public Address_Model UpdateAddress(Address_Model addAddress);
         public List<AddressModel> GetUserAddress();
         public List<AddressModel> GetUserAddressById(long userid);
+
+        public List<Address_Model1> GetUserAddressAndUserDetails();
     }
 }

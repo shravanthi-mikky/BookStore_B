@@ -27,11 +27,11 @@ namespace BusinessLayer.Services
                 throw;
             }
         }
-        public bool DeleteCart(long cartid)
+        public bool DeleteCart(CartModel4 cartModel4)
         {
             try
             {
-                return iCartRL.DeleteCart(cartid);
+                return iCartRL.DeleteCart(cartModel4);
             }
             catch (Exception)
             {
@@ -60,6 +60,31 @@ namespace BusinessLayer.Services
             catch (Exception)
             {
 
+                throw;
+            }
+        }
+
+        public List<CartModel2> GetAllCart()
+        {
+            try
+            {
+                return iCartRL.GetAllCart();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public List<CartModel3> GetAllCartItems()
+        {
+            try
+            {
+                return iCartRL.GetAllCartItems();
+            }
+            catch (Exception)
+            {
                 throw;
             }
         }

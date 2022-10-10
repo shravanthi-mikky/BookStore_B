@@ -50,7 +50,7 @@ Select @TotPrice=discountprice from BookTable where BookId = @BookId;
 	end	
 END
 
---------------------------
+--------------------------Get Order ------------------------------------------------
 
 Create or ALTER PROCEDURE [dbo].[Sp_GetOrderById]
 @UserId INT
@@ -68,3 +68,15 @@ END
 Select * from Users
 
 Select * from AdminTable
+
+----------Delete Order---------------------------------
+
+create or alter procedure DeleteOrder
+(
+@OrderId int,
+@UserId int
+)
+as
+begin
+delete OrderTable where OrdersId = @OrderId and UserId=@UserId;
+end;

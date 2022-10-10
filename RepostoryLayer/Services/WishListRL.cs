@@ -20,8 +20,9 @@ namespace RepostoryLayer.Services
         }
         SqlDataReader sqlDataReader;
         List<WishListModel> wishlist = new List<WishListModel>();
+        List<WishListModel1> wishlist1 = new List<WishListModel1>();
 
-        public WishListModel AddWishList(WishListModel wish, int UserId)
+        public WishListModel AddWishList(WishListModel wish)
         {
             sqlConnection = new SqlConnection(ConnString);
             using (sqlConnection)
@@ -32,7 +33,7 @@ namespace RepostoryLayer.Services
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     cmd.Parameters.AddWithValue("@BookId ", wish.BookId);
-                    cmd.Parameters.AddWithValue("@UserId ", UserId);
+                    cmd.Parameters.AddWithValue("@UserId ", wish.UserId);
 
                     sqlConnection.Open();
                     var result = cmd.ExecuteNonQuery();
@@ -57,7 +58,7 @@ namespace RepostoryLayer.Services
             }
         }
 
-        public string DeleteWishList(int WishListId, int UserId)
+        public string DeleteWishList(WishListModel3 wishListModel3)
         {
             sqlConnection = new SqlConnection(ConnString);
             using (sqlConnection)
@@ -67,8 +68,8 @@ namespace RepostoryLayer.Services
                     SqlCommand cmd = new SqlCommand("DeleteWishList", sqlConnection);
                     cmd.CommandType = CommandType.StoredProcedure;
 
-                    cmd.Parameters.AddWithValue("@WishListId ", WishListId);
-                    cmd.Parameters.AddWithValue("@UserId ", UserId);
+                    cmd.Parameters.AddWithValue("@WishListId ", wishListModel3.WishListId);
+                    //cmd.Parameters.AddWithValue("@UserId ", UserId);
 
                     sqlConnection.Open();
                     var result = cmd.ExecuteNonQuery();
@@ -93,26 +94,65 @@ namespace RepostoryLayer.Services
             }
         }
 
-        public IEnumerable<WishListModel> GetWishlist()
+
+        //trial method
+
+        public string DeleteWishList1()
+        {
+            sqlConnection = new SqlConnection(ConnString);
+            using (sqlConnection)
+            {
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("DeleteWishList", sqlConnection);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("@WishListId ", 6);
+                    sqlConnection.Open();
+                    var result = cmd.ExecuteNonQuery();
+
+                    if (result != 0)
+                    { return "Delete WishList"; }
+                    else
+                    { return null; }
+                }
+                catch (Exception)
+                { throw; }
+                finally
+                { sqlConnection.Close(); }
+            }
+        }
+
+        public IEnumerable<WishListModel1> GetWishlist()
         {
             sqlConnection = new SqlConnection(ConnString);
             using (sqlConnection)
                 try
                 {
                     sqlConnection.Open();
-                    String query = "SELECT WishListId, BookId FROM Wishlist";
-                    SqlCommand sqlCommand = new SqlCommand(query, sqlConnection);
+
+                    SqlCommand sqlCommand = new SqlCommand("Sp_GetAllWishListItems", sqlConnection);
+                    sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+
+                    //String query = "SELECT * FROM Wishlist";
+                    //SqlCommand sqlCommand = new SqlCommand(query, sqlConnection);
                     sqlDataReader = sqlCommand.ExecuteReader();
                     while (sqlDataReader.Read())
                     {
-                        wishlist.Add(new WishListModel()
+                        wishlist1.Add(new WishListModel1()
                         {
                             WishListId = Convert.ToInt32(sqlDataReader["WishListId"]),
-                            BookId = Convert.ToInt32(sqlDataReader["BookId"])
+                            BookId = Convert.ToInt32(sqlDataReader["BookId"]),
+                            UserId = Convert.ToInt32(sqlDataReader["UserId"]),
+                            bookImage = sqlDataReader["bookImage"].ToString(),
+                            authorName = sqlDataReader["authorName"].ToString(),
+                            originalPrice = Convert.ToInt32(sqlDataReader["originalPrice"]),
+                            discountPrice = Convert.ToInt32(sqlDataReader["discountPrice"]),
+                            bookName = sqlDataReader["bookName"].ToString(),
 
                         });
                     }
-                    return wishlist;
+                    return wishlist1;
                 }
                 catch (Exception)
                 {

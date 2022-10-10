@@ -39,12 +39,12 @@ namespace BookStoreBackend.Controllers
             }
         }
 
-        [HttpDelete("Delete")]
-        public IActionResult DeleteCart(long cartid)
+        [HttpPost("Delete")]
+        public IActionResult DeleteCart(CartModel4 cartModel4)
         {
             try
             {
-                var reg = iCartBL.DeleteCart(cartid);
+                var reg = iCartBL.DeleteCart(cartModel4);
                 if (reg != null)
 
                 {
@@ -95,6 +95,54 @@ namespace BookStoreBackend.Controllers
                 else
                 {
                     return this.BadRequest(new { Success = false, message = "unable to Fetch" });
+                }
+            }
+            catch (Exception ex)
+            {
+                return this.BadRequest(new { Success = false, message = ex.Message });
+            }
+        }
+
+        // Get all cart details
+
+        [Authorize]
+        [HttpGet("GetAllCart")]
+        public IActionResult GetAllCart()
+        {
+            try
+            {
+                var reg = this.iCartBL.GetAllCart();
+                if (reg != null)
+
+                {
+                    return this.Ok(new { Success = true, message = "All Cart Items", Response = reg });
+                }
+                else
+                {
+                    return this.BadRequest(new { Success = false, message = "Unable to get details" });
+                }
+            }
+            catch (Exception ex)
+            {
+                return this.BadRequest(new { Success = false, message = ex.Message });
+            }
+        }
+
+        [Authorize]
+        [HttpGet("GetAllCartItems")]
+        public IActionResult GetAllCartItems()
+        {
+            try
+            {
+                var reg = this.iCartBL.GetAllCartItems();
+                if (reg != null)
+
+                {
+                    return this.Ok(new { Success = true, message = "All Cart Items", Response = reg });
+                }
+                else
+                {
+                    return this.BadRequest(new { Success = false, message = "Unable to get details" });
                 }
             }
             catch (Exception ex)

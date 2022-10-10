@@ -75,15 +75,15 @@ namespace BookStoreBackend.Controllers
                 return this.BadRequest(new { Success = false, message = ex.Message });
             }
         }
-        [HttpGet("GetByUserID")]
-        public IActionResult GetUserAddressById(long userid)
+        [HttpGet("GetAllUersAddress")]
+        public IActionResult GetUserAddressById()
         {
             try
             {
-                var reg = this.iAddressBL.GetUserAddressById(userid);
+                var reg = this.iAddressBL.GetUserAddressAndUserDetails();
                 if (reg != null)
                 {
-                    return this.Ok(new { Success = true, message = "Address Details of user", Response = reg });
+                    return this.Ok(new { Success = true, message = "Address Details of Users", Response = reg });
                 }
                 else
                 {
@@ -96,5 +96,7 @@ namespace BookStoreBackend.Controllers
             }
 
         }
+
+        // Get  user address 
     }
 }

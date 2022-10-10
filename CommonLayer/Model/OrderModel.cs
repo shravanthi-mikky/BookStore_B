@@ -20,11 +20,6 @@ namespace CommonLayer.Model
     {
         public int OrderId { get; set; }
         public int UserId { get; set; }
-        //public int AddressId { get; set; }
-        //public int BookId { get; set; }
-        //public int Price { get; set; }
-        //public int Quantity { get; set; }
-       // public DateTime? OrderDate { get; set; }
         public BookModelForGetOrder bookModel { get; set; }
 
         // OrderId , OrderDate
