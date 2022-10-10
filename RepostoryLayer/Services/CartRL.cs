@@ -41,7 +41,7 @@ namespace RepostoryLayer.Services
                 throw new Exception(e.Message);
             }
         }
-        public bool DeleteCart(long cartid)
+        public bool DeleteCart(CartModel4 cartModel4)
         {
             try
             {
@@ -49,7 +49,7 @@ namespace RepostoryLayer.Services
                 {
                     SqlCommand com = new SqlCommand("Sp_DeleteCart", sqlConnection);
                     com.CommandType = CommandType.StoredProcedure;
-                    com.Parameters.AddWithValue("@CartId", cartid);
+                    com.Parameters.AddWithValue("@CartId", cartModel4.CartId);
                     sqlConnection.Open();
                     int i = com.ExecuteNonQuery();
                     sqlConnection.Close();
@@ -117,6 +117,97 @@ namespace RepostoryLayer.Services
                         cart.Quantity = Convert.ToInt32(rd["Quantity"]);
                        // cart.CartId = Convert.ToInt32(rd["CartId"]);
                         //cart.bookmodel = booksModel;
+                        cartmodel.Add(cart);
+                    }
+                    return cartmodel;
+                }
+                else
+                {
+                    return null;
+                }
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        // Get all Cart Details
+
+        public List<CartModel2> GetAllCart()
+        {
+            try
+            {
+                sqlConnection = new SqlConnection(ConnString);
+                SqlCommand sqlCommand = new SqlCommand("Sp_RetriveAllCart", sqlConnection);
+                sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                sqlConnection.Open();
+                SqlDataReader rd = sqlCommand.ExecuteReader();
+                if (rd.HasRows)
+                {
+                    List<CartModel2> cartmodel = new List<CartModel2>();
+                    while (rd.Read())
+                    {
+                        BookModel booksModel = new BookModel();
+                        CartModel2 cart = new CartModel2();
+
+
+                        //booksModel.bookImage = rd["bookName"].ToString();
+                        //booksModel.authorName = rd["authorName"].ToString();
+                        //booksModel.bookId = Convert.ToInt32(rd["bookid"]);
+                        //booksModel.originalPrice = Convert.ToInt32(rd["originalPrice"]);
+                        //booksModel.discountPrice = Convert.ToInt32(rd["discountPrice"]);
+                        cart.UserId = Convert.ToInt32(rd["UserId"]);
+                        cart.BookId = Convert.ToInt32(rd["BookId"]);
+                        cart.Quantity = Convert.ToInt32(rd["Quantity"]);
+                        cart.CartId = Convert.ToInt32(rd["CartId"]);
+                        //cart.bookmodel = booksModel;
+                        cartmodel.Add(cart);
+                    }
+                    return cartmodel;
+                }
+                else
+                {
+                    return null;
+                }
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        // Get All cart details with Join of Book Table
+
+        public List<CartModel3> GetAllCartItems()
+        {
+            try
+            {
+                sqlConnection = new SqlConnection(ConnString);
+                SqlCommand sqlCommand = new SqlCommand("Sp_RetriveAllCartItems", sqlConnection);
+                sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                sqlConnection.Open();
+                SqlDataReader rd = sqlCommand.ExecuteReader();
+                if (rd.HasRows)
+                {
+                    List<CartModel3> cartmodel = new List<CartModel3>();
+                    while (rd.Read())
+                    {
+                        CartModel3 cart = new CartModel3();
+
+
+                        cart.bookImage = rd["bookImage"].ToString();
+                        cart.authorName = rd["authorName"].ToString();
+                        cart.BookId = Convert.ToInt32(rd["bookId"]);
+                        cart.originalPrice = Convert.ToInt32(rd["originalPrice"]);
+                        cart.discountPrice = Convert.ToInt32(rd["discountPrice"]);
+                        cart.UserId = Convert.ToInt32(rd["UserId"]);
+                       // cart.BookId = Convert.ToInt32(rd["BookId"]);
+                       cart.bookName = rd["bookName"].ToString();
+                        cart.Quantity = Convert.ToInt32(rd["Quantity"]);
+                        cart.CartId = Convert.ToInt32(rd["CartId"]);
                         cartmodel.Add(cart);
                     }
                     return cartmodel;

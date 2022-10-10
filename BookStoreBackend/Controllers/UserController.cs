@@ -60,7 +60,7 @@ namespace BookStoreBackend.Controllers
                 return this.BadRequest(new { Success = false, message = e.Message });
             }
         }
-        [Authorize]
+        //[Authorize]
         [HttpPost("ForgetPassword")]
         public IActionResult ForgetPassword(string email)
         {

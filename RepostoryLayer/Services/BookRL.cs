@@ -46,7 +46,7 @@ namespace RepostoryLayer.Services
                     com.CommandType = System.Data.CommandType.StoredProcedure;
 
                     sqlConnection.Open();
-
+                    //com.Parameters.AddWithValue("@bookId", book.bookName);
                     com.Parameters.AddWithValue("@bookName", book.bookName);
                     com.Parameters.AddWithValue("@authorName", book.authorName);
                     com.Parameters.AddWithValue("@rating", book.rating);

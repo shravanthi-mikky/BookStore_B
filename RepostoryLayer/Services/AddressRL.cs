@@ -94,12 +94,15 @@ namespace RepostoryLayer.Services
                         }
                     }
                     return userdetaillist;
-                    sqlConnection.Close();
                 }
             }
             catch (Exception e)
             {
                 throw new Exception(e.Message);
+            }
+            finally
+            {
+                sqlConnection.Close();
             }
         }
         public List<AddressModel> GetUserAddressById(long userid)
@@ -129,12 +132,57 @@ namespace RepostoryLayer.Services
                         }
                     }
                     return userdetaillist;
-                    sqlConnection.Close();
                 }
             }
             catch (Exception e)
             {
                 throw new Exception(e.Message);
+            }
+            finally
+            {
+                sqlConnection.Close();
+            }
+        }
+
+        //get details with user details
+
+        public List<Address_Model1> GetUserAddressAndUserDetails()
+        {
+            try
+            {
+                using (sqlConnection = new SqlConnection(ConnString))
+                {
+                    sqlConnection.Open();
+                    SqlCommand cmd = new SqlCommand("Sp_GetUserAllAddress", sqlConnection);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    SqlDataReader readData = cmd.ExecuteReader();
+                    List<Address_Model1> userdetaillist = new List<Address_Model1>();
+                    if (readData.HasRows)
+                    {
+                        while (readData.Read())
+                        {
+                            Address_Model1 userDetail = new Address_Model1();
+                            userDetail.AddressId = readData.GetInt32("AddressId");
+                            userDetail.UserId = readData.GetInt32("UserId");
+                            userDetail.Address = readData.GetString("Address");
+                            userDetail.City = readData.GetString("City");
+                            userDetail.State = readData.GetString("State");
+                            userDetail.Type = readData.GetInt32("Type");
+                            userDetail.Mobile = readData.GetString("Mobile");
+                            userDetail.FullName = readData.GetString("Fullname");
+                            userdetaillist.Add(userDetail);
+                        }
+                    }
+                    return userdetaillist;
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            finally
+            {
+                sqlConnection.Close();
             }
         }
 

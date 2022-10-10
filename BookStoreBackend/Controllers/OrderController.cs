@@ -60,5 +60,28 @@ namespace BookStoreBackend.Controllers
                 return this.BadRequest(new { Success = false, message = ex.Message });
             }
         }
+
+        [HttpDelete("DeleteOrder")]
+        public ActionResult RemoveOrder(int OrderId, int UserId)
+        {
+            try
+            {
+                //var currentUser = HttpContext.User;
+                //int UserId = Convert.ToInt32(currentUser.Claims.FirstOrDefault(c => c.Type == "ID").Value);
+
+                var list = iOrderBL.DeleteOrder(OrderId, UserId);
+
+                if (list != null)
+                {
+                    return this.Ok(new { success = true, message = "Deleting your Order", data = list });
+                }
+                return this.BadRequest(new { success = false, message = "Failed to delete Order", data = list });
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

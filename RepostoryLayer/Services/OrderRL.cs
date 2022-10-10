@@ -77,5 +77,41 @@ namespace RepostoryLayer.Services
             }
             return null;
         }
+
+        public string DeleteOrder(int OrderId, int UserId)
+        {
+            sqlConnection = new SqlConnection(ConnString);
+            using (sqlConnection)
+            {
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("DeleteOrder", sqlConnection);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("@OrderId ", OrderId);
+                    cmd.Parameters.AddWithValue("@UserId ", UserId);
+
+                    sqlConnection.Open();
+                    var result = cmd.ExecuteNonQuery();
+
+                    if (result != 0)
+                    {
+                        return "Delete order";
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    sqlConnection.Close();
+                }
+            }
+        }
     }
 }

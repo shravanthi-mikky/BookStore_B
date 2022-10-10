@@ -15,11 +15,11 @@ namespace BusinessLayer.Services
             this.wishList = wishList;
         }
 
-        public WishListModel AddWishList(WishListModel wish, int UserId)
+        public WishListModel AddWishList(WishListModel wish)
         {
             try
             {
-                return this.wishList.AddWishList(wish, UserId);
+                return this.wishList.AddWishList(wish);
             }
             catch (Exception)
             {
@@ -28,11 +28,11 @@ namespace BusinessLayer.Services
             }
         }
 
-        public string DeleteWishList(int WishListId, int UserId)
+        public string DeleteWishList(WishListModel3 wishListModel3)
         {
             try
             {
-                return this.wishList.DeleteWishList(WishListId, UserId);
+                return this.wishList.DeleteWishList(wishListModel3);
             }
             catch (Exception)
             {
@@ -41,7 +41,19 @@ namespace BusinessLayer.Services
             }
         }
 
-        public IEnumerable<WishListModel> GetWishlist()
+        //trial method
+
+        public string DeleteWishList1()
+        {
+            try
+            {
+                return this.wishList.DeleteWishList1();
+            }
+            catch (Exception)
+            {throw;}
+        }
+
+        public IEnumerable<WishListModel1> GetWishlist()
         {
             try
             {

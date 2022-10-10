@@ -20,16 +20,16 @@ namespace BookStoreBackend.Controllers
 
         //[Authorize]
         [HttpPost("AddWishList")]
-        public ActionResult AddWishList(WishListModel wishList, int UserId)
+        public ActionResult AddWishList(WishListModel wishList)
         {
             try
             {
                 //var currentUser = HttpContext.User;
-                //int UserId = Convert.ToInt32(currentUser.Claims.FirstOrDefault(c => c.Type == "Id").Value);
+                //int UserId = Convert.ToInt32(User.Claims.FirstOrDefault(c => c.Type == "Id").Value);
 
                 //long userid = Convert.ToInt32(User.Claims.First(e => e.Type == "id").Value);
 
-                var list = this.wishBL.AddWishList(wishList, UserId);
+                var list = this.wishBL.AddWishList(wishList);
 
                 if (list != null)
                 {
@@ -45,15 +45,40 @@ namespace BookStoreBackend.Controllers
         }
 
         //[Authorize]
-        [HttpDelete("DeleteWishList")]
-        public ActionResult RemoveWishList(int WishListId, int UserId)
+        [HttpPost("DeleteWishList")]
+        public ActionResult RemoveWishList(WishListModel3 wishListModel3)
         {
             try
             {
                 //var currentUser = HttpContext.User;
                 //int UserId = Convert.ToInt32(currentUser.Claims.FirstOrDefault(c => c.Type == "ID").Value);
 
-                var list = this.wishBL.DeleteWishList(WishListId, UserId);
+                var list = this.wishBL.DeleteWishList(wishListModel3);
+
+                if (list != null)
+                {
+                    return this.Ok(new { success = true, message = "Deleting your WishList", data = list });
+                }
+                return this.BadRequest(new { success = false, message = "Failed to delete WishList", data = list });
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        //trial method
+
+        [HttpDelete("DeleteWishList1")]
+        public ActionResult RemoveWishList1()
+        {
+            try
+            {
+                //var currentUser = HttpContext.User;
+                //int UserId = Convert.ToInt32(currentUser.Claims.FirstOrDefault(c => c.Type == "ID").Value);
+
+                var list = this.wishBL.DeleteWishList1();
 
                 if (list != null)
                 {

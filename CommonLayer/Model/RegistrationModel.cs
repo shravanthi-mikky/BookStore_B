@@ -9,7 +9,7 @@ namespace CommonLayer.Model
         //public int RegistrationId { get; set; }
         public string Fullname { get; set; }
         public string Email { get; set; }
-        public long Mobile { get; set; }
+        public string Mobile { get; set; }
         public string Password { get; set; }
     }
 }

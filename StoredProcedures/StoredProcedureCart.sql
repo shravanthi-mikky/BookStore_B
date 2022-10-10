@@ -67,3 +67,25 @@ begin
 select * from CartTable where UserId=@UserId;
 SET NOCOUNT ON;
 END
+
+----------------------Get All Cart ----------------------------
+
+Create or ALTER procedure [dbo].[Sp_RetriveAllCart]
+as
+begin
+select * from CartTable;
+SET NOCOUNT ON;
+END
+
+--------get all cart details with book---------------
+Create or ALTER procedure [dbo].[Sp_RetriveAllCartItems]
+as
+begin
+SELECT p.bookName, p.authorName,p.originalPrice,p.discountPrice,p.bookImage,p.bookId,
+       s.Quantity,s.CartId,s.UserId
+FROM BookTable AS p
+INNER JOIN CartTable AS s ON p.bookId=s.BookId;
+SET NOCOUNT ON;
+END
+
+delete from CartTable where CartId=11

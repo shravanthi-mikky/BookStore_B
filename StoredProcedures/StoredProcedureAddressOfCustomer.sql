@@ -67,6 +67,8 @@ BEGIN
 	SELECT * from Addresses
 END
 
+update Addresses set UserId = 2 where AddressId=2
+
 ------------------------get address by userid--------------------
 create or alter PROCEDURE [dbo].[Sp_GetUserAddressById]
 (@UserId int
@@ -75,3 +77,17 @@ AS
 BEGIN
 	SELECT * from Addresses where UserId=@UserId
 END
+
+-----Get Address details and user details ---------------
+
+create or alter PROCEDURE [dbo].[Sp_GetUserAllAddress]
+AS
+BEGIN
+SELECT p.AddressId, p.Address,p.City,p.state,p.Type,p.UserId,
+       s.Fullname,s.Mobile
+FROM Addresses AS p
+INNER JOIN Users AS s ON p.UserId=s.Id where UserId = 1;
+END
+
+Delete from Addresses where AddressId = 8
+
